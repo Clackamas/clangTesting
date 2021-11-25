@@ -5,6 +5,7 @@ pipeline {
    stages {
        stage('Checkout') {
            steps {
+               echo "Checking out the code now!"
                checkout([
                    $class: 'GitSCM',
                    branches: [[ name: '*/master' ]],
@@ -14,6 +15,7 @@ pipeline {
        }
        stage('Static Analysis') {
            steps {
+               echo "Running Code Analsys Now!"
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks='*' -p . src/*.cpp > clang-tidy-output.txt'
                recordIssues(
@@ -30,6 +32,7 @@ pipeline {
        }
        stage('CMake') {
            steps {
+               echo "Running CMake now!"
                sh 'rm -rf cmake-build'
                sh 'mkdir -p cmake-build'
                dir('cmake-build') {
@@ -39,6 +42,7 @@ pipeline {
        }
        stage('Build') {
            steps {
+               echo "Building the app now!"
                dir('cmake-build') {
                    sh 'make install'
                }
