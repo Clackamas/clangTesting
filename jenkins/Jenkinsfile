@@ -9,7 +9,7 @@ pipeline {
                checkout([
                    $class: 'GitSCM',
                    branches: [[ name: '*/master' ]],
-                   userRemoteConfigs: scm.userremoteconfig
+                   userRemoteConfigs: [[ url: ' github.com:Clackamas/clangTesting.git' ]]
                ])
            }
        }
