@@ -4,40 +4,48 @@ pipeline {
    agent any
    stages {
        stage('Checkout') {
-           checkout([
-               $class: 'GitSCM',
-               branches: [[ name: '*/master' ]],
-               userRemoteConfigs: scm.userremoteconfig
-           ])
+           steps {
+               checkout([
+                   $class: 'GitSCM',
+                   branches: [[ name: '*/master' ]],
+                   userRemoteConfigs: scm.userremoteconfig
+               ])
+           }
        }
        stage('Static Analysis') {
-           if(fileExists('clang-tidy-output.txt')) {
-               sh 'rm -f clang-tidy-output.txt'
+           steps {
+               if(fileExists('clang-tidy-output.txt')) {
+                   sh 'rm -f clang-tidy-output.txt'
+               }
+               sh 'clang-tidy -checks='*' -p . src/*.cpp > clang-tidy-output.txt'
+               recordIssues(
+                   healthy: 1,
+                   failOnError: true,
+                   aggregatingResults: true,
+                   enabledForFailure: true,
+                   tool: [clangTidy(
+                       pattern: 'clang-tidy-output.txt',
+                       reportEncoding: 'UTF-8'
+                   )]
+               )  
            }
-           sh 'clang-tidy -checks='*' -p . src/*.cpp > clang-tidy-output.txt'
-           recordIssues(
-               healthy: 1,
-               failOnError: true,
-               aggregatingResults: true,
-               enabledForFailure: true,
-               tool: [clangTidy(
-                   pattern: 'clang-tidy-output.txt',
-                   reportEncoding: 'UTF-8'
-               )]
-           )
        }
        stage('CMake') {
-           if(fileExists('cmake-build')) {
-               sh 'rm -rf cmake-build'
-           }
-           sh 'mkdir -p cmake-build'
-           dir('cmake-build') {
-               sh 'cmake ..'
+           steps {
+               if(fileExists('cmake-build')) {
+                   sh 'rm -rf cmake-build'
+               }
+               sh 'mkdir -p cmake-build'
+               dir('cmake-build') {
+                   sh 'cmake ..'
+               }
            }
        }
        stage('Build') {
-           dir('cmake-build') {
-               sh 'make install'
+           steps {
+               dir('cmake-build') {
+                   sh 'make install'
+               }
            }
        }
    }
