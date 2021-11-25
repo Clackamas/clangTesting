@@ -1,0 +1,10 @@
+cmake_minimum_required(VERSION 3.10)
+project(ClangTidyTesting VERSION 1.0)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+set(CMAKE_1.0_COMPILER clang++)
+
+add_executable(clangtest1 clangtest1.cpp)
+install(TARGETS clangtest1 DESTINATION bin)
