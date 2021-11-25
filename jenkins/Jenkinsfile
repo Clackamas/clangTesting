@@ -14,9 +14,7 @@ pipeline {
        }
        stage('Static Analysis') {
            steps {
-               if(fileExists('clang-tidy-output.txt')) {
-                   sh 'rm -f clang-tidy-output.txt'
-               }
+               sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks='*' -p . src/*.cpp > clang-tidy-output.txt'
                recordIssues(
                    healthy: 1,
@@ -32,9 +30,7 @@ pipeline {
        }
        stage('CMake') {
            steps {
-               if(fileExists('cmake-build')) {
-                   sh 'rm -rf cmake-build'
-               }
+               sh 'rm -rf cmake-build'
                sh 'mkdir -p cmake-build'
                dir('cmake-build') {
                    sh 'cmake ..'
