@@ -17,7 +17,7 @@ pipeline {
            steps {
                echo "Running Code Analsys Now!"
                sh 'rm -f clang-tidy-output.txt'
-               sh 'clang-tidy -checks='*' -p . src/*.cpp > clang-tidy-output.txt'
+               sh 'clang-tidy -checks=\'*\' -p . src/*.cpp > clang-tidy-output.txt'
                recordIssues(
                    healthy: 1,
                    failOnError: true,
