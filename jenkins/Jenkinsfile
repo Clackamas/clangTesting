@@ -30,6 +30,7 @@ pipeline {
                        reportEncoding: 'UTF-8'
                    )]
                )  
+               echo "DEBUG (after): ${currentBuild.currentResult}"
                script {
                    if( currentBuild.currentResult == 'UNSTABLE' ) {
                        error("Build is marked as unstable.  Failing build due to clang-tidy warnings.")
