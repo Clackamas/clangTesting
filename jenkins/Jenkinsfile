@@ -15,7 +15,7 @@ pipeline {
        }
        stage('Static Analysis') {
            steps {
-               echo "Running Code Analsys Now!"
+               echo "Running Code Analysis Now!"
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks=* -header-filter=.* -p . src/*.cpp > clang-tidy-output.txt'
                recordIssues(
@@ -23,10 +23,10 @@ pipeline {
                    failOnError: true,
                    aggregatingResults: false,
                    enabledForFailure: true,
-                   tool: [clangTidy(
+                   tool: [[clangTidy(
                        pattern: 'clang-tidy-output.txt',
                        reportEncoding: 'UTF-8'
-                   )]
+                   )]]
                )  
            }
        }
