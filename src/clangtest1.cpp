@@ -1,8 +1,7 @@
 #include <iostream>
 
 
-int
-main(int argc, char **argv) {
+int main() {
     int aBogusValue1 = 1;
     int aBogusValue2 = 2;
 
