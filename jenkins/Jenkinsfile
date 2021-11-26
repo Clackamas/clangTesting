@@ -31,7 +31,12 @@ pipeline {
                    )]
                )  
                echo "DEBUG (after): ${currentBuild.currentResult}"
-               echo "DEBUG (after): ${currentBuild.result}"
+               script {
+                   if( currentBuild.currentResult == 'UNSTABLE' ) {
+                       echo "Build is unstable.  Chaning to failed."
+                       currentBuild.currentResult = 'FAILURE' 
+                   }
+               }
            }
        }
        stage('CMake') {
