@@ -20,7 +20,7 @@ pipeline {
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . src/*.cpp -- -std=c++98 > clang-tidy-output.txt'
                recordIssues(
-                   healthy: 1,
+                   //healthy: 1,
                    failOnError: false,
                    aggregatingResults: true,
                    enabledForFailure: false,
