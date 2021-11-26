@@ -32,6 +32,7 @@ pipeline {
                )  
                echo "DEBUG (after): ${currentBuild.currentResult}"
                echo "DEBUG (after): ${currentBuild.result}"
+               echo "DEBUG (after): ${currentBuild.UNSTABLE}"
            }
        }
        stage('CMake') {
