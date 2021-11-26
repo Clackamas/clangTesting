@@ -18,6 +18,7 @@ pipeline {
                echo "Running Code Analysis Now!"
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . src/*.cpp -- -std=c++98 > clang-tidy-output.txt'
+               sh '[ ! -s clang-tidy-output.txt ] && rm clang-tidy-output.txt'
                recordIssues(
                    healthy: 1,
                    failOnError: true,
