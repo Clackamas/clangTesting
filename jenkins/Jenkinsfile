@@ -23,10 +23,11 @@ pipeline {
                    failOnError: true,
                    aggregatingResults: false,
                    enabledForFailure: true,
-                   tool: [[clangTidy(
+                   qualityGates: [[threshold: 1, 'TOTAL': unstable, unstable: true ]],
+                   tools: [clangTidy(
                        pattern: 'clang-tidy-output.txt',
                        reportEncoding: 'UTF-8'
-                   )]]
+                   )]
                )  
            }
        }
