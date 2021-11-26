@@ -29,6 +29,7 @@ pipeline {
                        reportEncoding: 'UTF-8'
                    )]
                )  
+               echo "DEBUG: ${currentBuild.result}"
            }
        }
        stage('CMake') {
