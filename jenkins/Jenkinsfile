@@ -15,12 +15,13 @@ pipeline {
        }
        stage('Static Analysis') {
            steps {
+               echo "DEBUG (before): ${currentBuild.result}"
                echo "Running Code Analysis Now!"
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . src/*.cpp -- -std=c++98 > clang-tidy-output.txt'
                recordIssues(
                    healthy: 1,
-                   failOnError: false,
+                   failOnError: true,
                    aggregatingResults: false,
                    enabledForFailure: false,
                    qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
@@ -29,7 +30,7 @@ pipeline {
                        reportEncoding: 'UTF-8'
                    )]
                )  
-               echo "DEBUG: ${currentBuild.result}"
+               echo "DEBUG (after): ${currentBuild.result}"
            }
        }
        stage('CMake') {
