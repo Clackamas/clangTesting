@@ -23,7 +23,7 @@ pipeline {
                    failOnError: true,
                    aggregatingResults: false,
                    enabledForFailure: true,
-                   qualityGates: [[threshold: 1, 'TOTAL': unstable, unstable: true ]],
+                   qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
                    tools: [clangTidy(
                        pattern: 'clang-tidy-output.txt',
                        reportEncoding: 'UTF-8'
