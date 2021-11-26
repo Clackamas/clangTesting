@@ -15,7 +15,7 @@ pipeline {
        }
        stage('Static Analysis') {
            steps {
-               echo "DEBUG (before): ${currentBuild.result}"
+               echo "DEBUG (before): ${currentBuild.currentResult}"
                echo "Running Code Analysis Now!"
                sh 'rm -f clang-tidy-output.txt'
                sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . src/*.cpp -- -std=c++98 > clang-tidy-output.txt'
@@ -32,7 +32,6 @@ pipeline {
                )  
                echo "DEBUG (after): ${currentBuild.currentResult}"
                echo "DEBUG (after): ${currentBuild.result}"
-               echo "DEBUG (after): ${currentBuild.UNSTABLE}"
            }
        }
        stage('CMake') {
