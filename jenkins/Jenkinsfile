@@ -25,7 +25,7 @@ pipeline {
                        failOnError: false,
                        aggregatingResults: true,
                        enabledForFailure: false,
-                       //filters: [ excludeFile( '*.crt$') ],
+                       filters: [ excludeFile( '**/*.crt') ],
                        qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
                        tools: [clangTidy(
                            pattern: 'clang-tidy-output.txt',
