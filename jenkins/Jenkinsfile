@@ -21,7 +21,6 @@ pipeline {
                dir('src') {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
-               try {
                    recordIssues(
                        failOnError: false,
                        aggregatingResults: true,
@@ -33,10 +32,6 @@ pipeline {
                            reportEncoding: 'UTF-8'
                        )]
                    )   
-               } catch (all) {
-                  errors("Issue detected: ${all.to_string}"
-                  throw all
-               }
                echo "DEBUG (after): ${currentBuild.currentResult}"
                script {
                    if( currentBuild.currentResult == 'UNSTABLE' ) {
