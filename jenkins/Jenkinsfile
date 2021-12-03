@@ -22,19 +22,20 @@ pipeline {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
                try {
-               recordIssues(
-                   failOnError: false,
-                   aggregatingResults: true,
-                   enabledForFailure: false,
-                   //filters: [ excludeFile( '*.crt$') ],
-                   qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
-                   tools: [clangTidy(
-                       pattern: 'clang-tidy-output.txt',
-                       reportEncoding: 'UTF-8'
-                   )]
-               )   
-               } catch(all) {
-                  errors("Issue detected: ${all}"
+                   recordIssues(
+                       failOnError: false,
+                       aggregatingResults: true,
+                       enabledForFailure: false,
+                       //filters: [ excludeFile( '*.crt$') ],
+                       qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
+                       tools: [clangTidy(
+                           pattern: 'clang-tidy-output.txt',
+                           reportEncoding: 'UTF-8'
+                       )]
+                   )   
+               } catch (all) {
+                  errors("Issue detected: ${all.to_string}"
+                  throw all
                }
                echo "DEBUG (after): ${currentBuild.currentResult}"
                script {
