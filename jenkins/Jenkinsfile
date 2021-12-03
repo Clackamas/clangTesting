@@ -22,10 +22,9 @@ pipeline {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
                    recordIssues(
-                       failOnError: false,
-                       aggregatingResults: true,
                        enabledForFailure: false,
-                       filters: [ excludeFile( '**/*.crt') ],
+                       aggregatingResults: true,
+                       filters: [ excludeFile( '*.crt') ],
                        qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
                        tools: [clangTidy(
                            pattern: 'clang-tidy-output.txt',
