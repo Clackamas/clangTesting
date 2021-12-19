@@ -8,7 +8,7 @@ pipeline {
                echo "Checking out the code now!"
                checkout([
                    $class: 'GitSCM',
-                   branches: [[ name: '*/master' ]],
+                   branches: scm.branches,
                    userRemoteConfigs: scm.userRemoteConfigs
                ])
            }
