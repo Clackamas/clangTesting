@@ -7,6 +7,7 @@ pipeline {
            steps {
                echo "Checking out the code now!"
                echo "scm.branches = ${scm.branches}"
+               echo "env.GIT_BRANCH = ${env.GIT_BRANCH}"
                checkout([
                    $class: 'GitSCM',
                    branches: scm.branches,
