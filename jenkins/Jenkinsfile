@@ -11,9 +11,9 @@ pipeline {
                checkout([
                    $class: 'GitSCM',
                    //branches: scm.branches,
-                   branches: [[ name: '*/master/*']],
+                   branches: [[name: '*/master/*']],
                    doGenerateSubmoduleConfigurations: false,
-                   extensions: [[$class: 'LocalBranch', localBranch: "**"]],
+                   extensions: [[$class: 'LocalBranch', localBranch: "master"]],
                    //submoduleCfg: [],
                    //userRemoteConfigs: [[ url: 'http://TFS_SERVER:8080/tfs/DefaultCollection/Product/_git/Project' ]],
                    userRemoteConfigs: scm.userRemoteConfigs
