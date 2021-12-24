@@ -9,7 +9,8 @@ pipeline {
                echo "scm.branches = ${scm.branches}"
                checkout([
                    $class: 'GitSCM',
-                   branches: scm.branches,
+                   branches: [[ name: 'master' ]],
+                   //branches: scm.branches,
                    userRemoteConfigs: scm.userRemoteConfigs
                ])
            }
