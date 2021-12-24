@@ -6,6 +6,7 @@ pipeline {
        stage('Checkout') {
            steps {
                echo "Checking out the code now!"
+               echo "scm.branches = ${scm.branches}"
                checkout([
                    $class: 'GitSCM',
                    branches: [[ name: '*/master' ]],
