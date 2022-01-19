@@ -11,7 +11,7 @@ pipeline {
                checkout([
                    $class: 'GitSCM',
                    //branches: scm.branches,
-                   branches: [[name: 'refs/remote/origin/master/*']],
+                   branches: [[name: 'master/*']],
                    doGenerateSubmoduleConfigurations: false,
                    extensions: [[$class: 'RemoteBranch', localBranch: "master"]],
                    //submoduleCfg: [],
@@ -24,21 +24,22 @@ pipeline {
            steps {
                echo "DEBUG (before): ${currentBuild.currentResult}"
                echo "Running Code Analysis Now!"
+               sh 'rm -f clang-tidy-output.txt'
                dir('src') {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
                echo "removing clan-tidy-output.txt"
                sh 'rm -f clang-tidy-output.txt'
-                   recordIssues(
-                       enabledForFailure: false,
-                       aggregatingResults: true,
-                       filters: [ excludeFile( '.*\\.crt') ],
-                       qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
-                       tools: [clangTidy(
-                           pattern: 'clang-tidy-output.txt',
-                           reportEncoding: 'UTF-8'
-                       )]
-                   )   
+               recordIssues(
+                   enabledForFailure: false,
+                   aggregatingResults: true,
+                   filters: [ excludeFile( '.*\\.crt') ],
+                   qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
+                   tools: [clangTidy(
+                       pattern: 'clang-tidy-output.txt',
+                       reportEncoding: 'UTF-8'
+                   )]
+               )   
                echo "DEBUG (after): ${currentBuild.currentResult}"
                script {
                    if( currentBuild.currentResult == 'UNSTABLE' ) {
