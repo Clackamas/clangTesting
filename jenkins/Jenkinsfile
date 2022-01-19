@@ -26,10 +26,11 @@ pipeline {
                }
                sh 'echo "Gobble Gook" > clang-tidy-output.txt'
                recordIssues(
-                   failOnError: true,
+                   failOnError: false,
                    enabledForFailure: true,
                    aggregatingResults: true,
-                   filters: [ excludeFile( '.*\\.crt') ],
+                   //filters: [ excludeFile( '.*\\.crt') ],
+                   filters: [ excludeFile( 'ssl/*') ],
                    qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
                    tools: [clangTidy(
                        pattern: 'clang-tidy-output.txt',
