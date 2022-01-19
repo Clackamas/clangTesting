@@ -27,7 +27,7 @@ pipeline {
                echo "removing clan-tidy-output.txt"
                sh 'rm -f clang-tidy-output.txt'
                recordIssues(
-                   enabledForFailure: false,
+                   enabledForFailure: true,
                    aggregatingResults: true,
                    filters: [ excludeFile( '.*\\.crt') ],
                    qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
