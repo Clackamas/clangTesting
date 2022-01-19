@@ -10,11 +10,8 @@ pipeline {
                echo "env.GIT_BRANCH = ${env.GIT_BRANCH}"
                checkout([
                    $class: 'GitSCM',
-                   //branches: scm.branches,
-                   branches: [[name: 'master/*']],
+                   branches: scm.branches,
                    doGenerateSubmoduleConfigurations: false,
-                   //submoduleCfg: [],
-                   //userRemoteConfigs: [[ url: 'http://TFS_SERVER:8080/tfs/DefaultCollection/Product/_git/Project' ]],
                    userRemoteConfigs: scm.userRemoteConfigs
                ])
            }
