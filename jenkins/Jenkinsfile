@@ -24,7 +24,7 @@ pipeline {
                dir('src') {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
-               sh 'echo -n > clang-tidy-output.txt'
+               //sh 'echo -n > clang-tidy-output.txt'
                recordIssues(
                    enabledForFailure: true,
                    aggregatingResults: true,
@@ -36,11 +36,11 @@ pipeline {
                    )]
                )   
                echo "DEBUG (after): ${currentBuild.currentResult}"
-               script {
-                   if( currentBuild.currentResult == 'UNSTABLE' ) {
-                       error("Build is marked as unstable.  Failing build due to clang-tidy warnings.")
-                   }
-               }
+               //script {
+               //    if( currentBuild.currentResult == 'UNSTABLE' ) {
+               //        error("Build is marked as unstable.  Failing build due to clang-tidy warnings.")
+               //    }
+               //}
            }
        }
        stage('CMake') {
