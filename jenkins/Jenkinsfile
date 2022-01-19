@@ -30,7 +30,7 @@ pipeline {
                    enabledForFailure: true,
                    aggregatingResults: true,
                    //filters: [ excludeFile( '.*\\.crt') ],
-                   filters: [ excludeFile( 'ssl/*') ],
+                   //filters: [ excludeFile( 'ssl/*') ],
                    qualityGates: [[threshold: 1, type: 'TOTAL', unstable: true ]],
                    tools: [clangTidy(
                        pattern: 'clang-tidy-output.txt',
