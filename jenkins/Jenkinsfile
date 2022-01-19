@@ -13,7 +13,6 @@ pipeline {
                    //branches: scm.branches,
                    branches: [[name: 'master/*']],
                    doGenerateSubmoduleConfigurations: false,
-                   extensions: [[$class: 'RemoteBranch', localBranch: "master"]],
                    //submoduleCfg: [],
                    //userRemoteConfigs: [[ url: 'http://TFS_SERVER:8080/tfs/DefaultCollection/Product/_git/Project' ]],
                    userRemoteConfigs: scm.userRemoteConfigs
