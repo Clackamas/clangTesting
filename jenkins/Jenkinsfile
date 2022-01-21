@@ -24,7 +24,13 @@ pipeline {
                dir('src') {
                    sh 'clang-tidy -checks=\'*\' -header-filter=\'.*\' -p . *.cpp -- -std=c++98 > ../clang-tidy-output.txt'
                }
-               //sh 'echo "Gobbledygook" > clang-tidy-output.txt'
+               if( fileExists('clang-tidy-output.txt') ) { 
+                   new File('clang-tidy-output.txt').withWriter('UTF-8) { file ->
+                       if( file.size() == 0 ) {
+                           file.writeLine('Pass')
+                       }
+                   }
+               }
                recordIssues(
                    failOnError: true,
                    enabledForFailure: true,
