@@ -29,9 +29,9 @@ pipeline {
                script {
                sh 'pwd'
                if( fileExists('clang-tidy-output.txt') ) { 
-                   new File('clang-tidy-output.txt').withWriter('UTF-8') { file ->
+                   new File('clang-tidy-output.txt') { file ->
                        if( file.size() == 0 ) {
-                           file.writeLine('Pass')
+                           file.write('Pass', 'UTF-8')
                        }
                    }
                }
