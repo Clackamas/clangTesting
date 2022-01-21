@@ -27,6 +27,7 @@ pipeline {
                //sh '[ -z \'clang-tidy-output.txt\' ] && echo Pass > clang-tidy-output.txt'
                dir(env.WORKSPACE) {
                script {
+               sh 'pwd'
                if( fileExists('clang-tidy-output.txt') ) { 
                    new File('clang-tidy-output.txt').withWriter('UTF-8') { file ->
                        if( file.size() == 0 ) {
