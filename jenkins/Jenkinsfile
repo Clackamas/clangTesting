@@ -26,7 +26,7 @@ pipeline {
                }
                script {
                if( fileExists('clang-tidy-output.txt') ) { 
-                   new File('clang-tidy-output.txt').withWriter('UTF-8') { file ->
+                   new File("${env.WORKSPACE}",'clang-tidy-output.txt').withWriter('UTF-8') { file ->
                        if( file.size() == 0 ) {
                            file.writeLine('Pass')
                        }
